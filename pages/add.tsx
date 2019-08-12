@@ -1,9 +1,12 @@
+import * as React from 'react'
+
+import Add from '../components/Add'
 import Layout from '../components/Layout'
 
-const Add = () => (
+const AddPage: React.FunctionComponent = () => (
   <Layout>
-    <h1>Add Words</h1>
+    <Add />
   </Layout>
 )
 
-export default Add
+export default AddPage

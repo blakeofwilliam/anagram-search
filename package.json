@@ -31,6 +31,7 @@
   },
   "scripts": {
     "build": "next build",
+    "build:dictionary": "node scripts/buildDictionary",
     "dev": "node server",
     "start": "node server"
   }

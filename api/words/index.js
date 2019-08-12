@@ -18,7 +18,28 @@ WordsRouter.route('/')
     }
   })
   .post(async (req, res) => {
-    const { word: requestWord } = req.body
+    const { 
+      word: requestWord, 
+      words: requestWords = [] 
+    } = req.body
+
+    if (requestWords.length) {
+      const words = requestWords.map(word => ({
+        length: word.length,
+        letters: getLetters(word),
+        word: word
+      }))
+
+      try {
+        const newWords = await Word.create(words)
+        res.send(newWords)
+        return
+      } catch(e) {
+        res.status(500).send(e)
+        return
+      }
+    }
+
     const word = requestWord.toLowerCase()
 
     let newWord = new Word({

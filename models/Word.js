@@ -30,7 +30,10 @@ const WordSchema = mongoose.Schema({
     y: Number,
     z: Number
   },
-  word: String
+  word: {
+    type: String,
+    unique: true
+  }
 })
 
 const Word = mongoose.model('Word', WordSchema);

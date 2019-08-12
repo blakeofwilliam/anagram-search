@@ -6,14 +6,12 @@ import {
   SearchButton,
   SearchForm,
   SearchInput, 
-  SearchResult,
-  SearchResults
 } from './style'
 
-import Card from '../Styled/Card'
 import Container from '../Styled/Container'
 import Flex from '../Styled/Flex'
 import Module from '../Styled/Module'
+import SearchList from './SearchList'
 
 class Search extends React.Component {
   state = {
@@ -60,33 +58,11 @@ class Search extends React.Component {
             </Flex>
           </Container>
         </Module>
-        <Module>
-          <Container>
-            {
-              words.length > 0 && (
-                <SearchResults>
-                  {
-                    words.map((word:string) => (
-                      <SearchResult key={word}>
-                        <Card>
-                          {word}
-                          <button 
-                            onClick={e => {
-                              e.preventDefault()
-                              this.handleDelete(word)
-                            }}
-                          >
-                            Delete
-                          </button>
-                        </Card>
-                      </SearchResult>
-                    ))
-                  }
-                </SearchResults>
-              )
-            }
-          </Container>
-        </Module>
+        
+        {
+          words.length > 0 && 
+          <SearchList onDelete={this.handleDelete} words={words} />
+        }
       </React.Fragment>
     )
   }
