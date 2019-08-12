@@ -10,12 +10,17 @@ WordsRouter.use(bodyParser.json())
 
 WordsRouter.route('/')
   .get(async (req, res) => {
-    const words = await Word.find()
-
-    res.send(words)
+    try {
+      const words = await Word.find()
+      res.send(words)
+    } catch(e) {
+      res.status(500).send(e)
+    }
   })
   .post(async (req, res) => {
-    const { word } = req.body
+    const { word: requestWord } = req.body
+    const word = requestWord.toLowerCase()
+
     let newWord = new Word({
       length: word.length,
       letters: getLetters(word),
@@ -32,16 +37,26 @@ WordsRouter.route('/')
 
 WordsRouter.route('/:word')
   .delete(async (req, res) => {
-    const { word } = req.params
-    const deletedWord = await Word.deleteOne({ word })
+    const { word: requestWord } = req.params
+    const word = requestWord.toLowerCase()
 
-    res.send(deletedWord)
+    try {
+      const deletedWord = await Word.deleteOne({ word })
+      res.send(deletedWord)
+    } catch(e) {
+      res.status(500).send(e)
+    }
   })
   .get(async (req, res) => {
-    const { word } = req.params
-    const foundWord = await Word.findOne({ word })
+    const { word: requestWord } = req.params
+    const word = requestWord.toLowerCase()
 
-    res.send(foundWord)
+    try {
+      const foundWord = await Word.findOne({ word })
+      res.send(foundWord)
+    } catch(e) {
+      res.status(500).send(e)
+    }
   })
 
 module.exports = WordsRouter
