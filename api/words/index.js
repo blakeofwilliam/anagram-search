@@ -33,13 +33,13 @@ WordsRouter.route('/')
 WordsRouter.route('/:word')
   .delete(async (req, res) => {
     const { word } = req.params
-    const deletedWord = await Word.find({ word })
+    const deletedWord = await Word.deleteOne({ word })
 
     res.send(deletedWord)
   })
   .get(async (req, res) => {
     const { word } = req.params
-    const foundWord = await Word.find({ word })
+    const foundWord = await Word.findOne({ word })
 
     res.send(foundWord)
   })
