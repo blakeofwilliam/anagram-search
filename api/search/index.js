@@ -19,6 +19,8 @@ SearchRouter.get('/:tiles', async (req, res) => {
   const tiles = requestTiles.toLowerCase()
   const query = getLettersQuery(tiles)
 
+  console.log(JSON.stringify(query, null, 2))
+
   try {
     const words = await Words.find(query)
     res.send(words.map(w => w.word))
