@@ -4,50 +4,56 @@ const Word = require('../models/Word')
 
 module.exports = async (req, res) => {
   await loadDb()
-  
-  if (req.method === 'GET') {
-    try {
-      const words = await Word.find()
-      res.send(words)
-    } catch(e) {
-      res.status(500).send(e)
-    }
-  } else if (req.method === 'POST') {
-    const { 
-      word: requestWord, 
-      words: requestWords = [] 
-    } = req.body
+  const { method } = req
 
-    if (requestWords.length) {
-      const words = requestWords.map(word => ({
-        length: word.length,
-        letters: getLetters(word),
-        word: word
-      }))
-
+  switch(method) {
+    case 'GET':
       try {
-        const newWords = await Word.create(words)
-        res.send(newWords)
-        return
+        const words = await Word.find()
+        res.send(words)
       } catch(e) {
         res.status(500).send(e)
-        return
       }
-    }
+      break
+    case 'POST':
+      const { 
+        word: requestWord, 
+        words: requestWords = [] 
+      } = req.body
 
-    const word = requestWord.toLowerCase()
+      if (requestWords.length > 0) {
+        const words = requestWords.map(word => ({
+          length: word.length,
+          letters: getLetters(word.toLowerCase()),
+          word: word.toLowerCase()
+        }))
 
-    try {
-      const wordProps = new Word({
-        length: word.length,
-        letters: getLetters(word),
-        word: word
-      })
-      const createdWord = await word.save(wordProps)
+        try {
+          const newWords = await Word.create(words)
+          res.send(newWords)
+          return
+        } catch(e) {
+          res.status(500).send(e)
+          return
+        }
+      }
 
-      res.send(createdWord)
-    } catch(e) {
-      res.status(500).send(e)
-    }
+      try {
+        const word = requestWord.toLowerCase()
+        const newWord = new Word({
+          length: word.length,
+          letters: getLetters(word),
+          word: word
+        })
+        const createdWord = await newWord.save()
+
+        res.send(createdWord)
+      } catch(e) {
+        res.status(500).send(e)
+      }
+      break
+    default:
+      res.status(401).send('INVALID REQUEST')
+      break
   }
 }
