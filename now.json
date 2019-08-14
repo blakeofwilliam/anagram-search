@@ -1,0 +1,16 @@
+{
+  "name": "anagram-search",
+  "version": 2,
+  "build": {
+    "env": {
+      "MONGO_HOST":"@mongo-host",
+      "MONGO_PASS":"@mongo-pass",
+      "MONGO_USER":"@mongo-user"
+    }
+  },
+  "env": {
+    "MONGO_HOST":"@mongo-host",
+    "MONGO_PASS":"@mongo-pass",
+    "MONGO_USER":"@mongo-user"
+  }
+}

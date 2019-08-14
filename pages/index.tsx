@@ -1,5 +1,5 @@
 import * as React from 'react'
-import Head from 'next/Head'
+import Head from 'next/head'
 
 import Layout from '../components/Layout'
 import Search from '../components/Search'

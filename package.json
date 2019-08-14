@@ -12,6 +12,7 @@
     "body-parser": "^1.19.0",
     "emotion-theming": "^10.0.14",
     "express": "^4.17.1",
+    "mongodb": "^3.3.0",
     "mongoose": "^5.6.9",
     "next": "^9.0.3",
     "polished": "^3.4.1",
@@ -32,7 +33,7 @@
   "scripts": {
     "build": "next build",
     "build:dictionary": "node scripts/buildDictionary",
-    "dev": "node server",
-    "start": "node server"
+    "dev": "next",
+    "start": "next start"
   }
 }
